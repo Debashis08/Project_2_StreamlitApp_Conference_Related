@@ -1,12 +1,9 @@
 import streamlit as st
 import tensorflow as tf
-# from tensorflow import keras
-# from tf.keras.utils import img_to_array
-# from tensorlfow.keras.models import load_model
 import numpy as np
 from PIL import Image
 
-result=""
+
 classes=['1-1','1-2','1-4','PURE']
 
 def predict(img):
@@ -20,31 +17,46 @@ def predict(img):
         processed_img=np.expand_dims(x,axis=0)
         pred=model.predict(processed_img)
         prediction=classes[np.argmax(pred)]
-        st.write(prediction)
-
-
-def getPic():
-    st.camera_input("Click a Pic")
-
-
+        st.success(prediction)
 
 
 def main():
+    handle_style = """
+        <style>
+        #MainMenu {visibility: hidden;}
+
+        .block-container
+        {
+            padding-top: 1rem;
+            padding-bottom: 3rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        </style>
+        """
+    st.markdown(handle_style, unsafe_allow_html=True)
+
     title="""
-    <h2 style='text-align: center'>
-    Find Adulteration in Turmeric Powder
-    </h2>
+    <h3 style="text-align: center;">
+        Find Adulteration in Turmeric Powder
+    </h3>
     """
     st.markdown(title,unsafe_allow_html=True)
+
     # img=Image.open('./upload_image.jpg')
     # new_img=img.resize((300,300))
-    # st.image(new_img)
-    # column1,column2,column3=st.columns([2,1,2])
-    # column1.button("Upload an Image",use_container_width=True)
-    # # column2.button()
-    # column3.button("Click a Picture",use_container_width=True)
+    
+
+
     img=st.file_uploader("Choose an image",type=['jpg','png','.jpeg'])
-    st.button("Predict",on_click=predict(img))
+    st.button("Predict",key=1,on_click=predict(img))
+
+
+    captured_img=st.camera_input("Click a pic")
+    st.button("Predict",key=2,on_click=predict(captured_img))
+    
+
     
 
 if __name__=='__main__':
