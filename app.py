@@ -16,7 +16,16 @@ def predictCapturedImage(img):
         processed_img=np.expand_dims(x,axis=0)
         pred=model.predict(processed_img)
         prediction=classes[np.argmax(pred)]
-        return prediction
+
+        if (prediction=='1-1'):
+            return 'The captured image of the turmeric sample is predicted to be 50% Adulterated.'
+        elif (prediction=='1-2'):
+            return 'The captured image of the turmeric sample is predicted to be 66% Adulterated.'
+        elif (prediction=='1-4'):
+            return 'The captured image of the turmeric sample is predicted to be 80% Adulterated.'
+        else:
+            return 'The captured image of the turmeric sample is predicted to be Pure.'
+        
     else:
         return ""
 
@@ -35,15 +44,30 @@ def predictUploadedImage(img):
         processed_img=np.expand_dims(x,axis=0)
         pred=model.predict(processed_img)
         prediction=classes[np.argmax(pred)]
-        return prediction
+
+        if (prediction=='1-1'):
+            return 'The uploaded image of the turmeric sample is predicted to be 50% Adulterated.'
+        elif (prediction=='1-2'):
+            return 'The uploaded image of the turmeric sample is predicted to be 66% Adulterated.'
+        elif (prediction=='1-4'):
+            return 'The uploaded image of the turmeric sample is predicted to be 80% Adulterated.'
+        else:
+            return 'The uploaded image of the turmeric sample is predicted to be Pure.'
+        
     else:
         return ""
 
 
 def main():
+    st.set_page_config(
+    page_title="Adulteration Identification App",
+    layout="centered"
+)
+    
     handle_style = """
         <style>
         #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
 
         .block-container
         {
@@ -71,6 +95,12 @@ def main():
     img=st.file_uploader("Choose an image file",type=['jpg','png','.jpeg'])
     result2=predictUploadedImage(img)
 
+    result="""
+    <h4 style="text-align: center;">
+        Result
+    </h4>
+    """
+    st.markdown(result,unsafe_allow_html=True)
     if (result1=="" and result2==""):
         st.success("Please capture or select one image to predict adulreration")
     elif (result1!="" and result2==""):
