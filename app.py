@@ -7,7 +7,7 @@ from PIL import Image
 classes=['1-1','1-2','1-4','PURE']
 
 def predictCapturedImage(img):
-    model=tf.keras.models.load_model('./My_CNN_Model.h5')
+    model=tf.keras.models.load_model('./model_9.h5')
     if img is not None:
         x_=Image.open(img)
         x_=x_.resize((256,256))
