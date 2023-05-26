@@ -7,7 +7,7 @@ from PIL import Image
 classes=['1-1','1-2','1-4','PURE']
 
 def predictCapturedImage(img):
-    model=tf.keras.models.load_model('./model_9.h5')
+    model=tf.keras.models.load_model('./model_fine_tuned.h5')
     if img is not None:
         x_=Image.open(img)
         x_=x_.resize((256,256))
@@ -31,7 +31,7 @@ def predictCapturedImage(img):
 
 
 def predictUploadedImage(img):
-    model=tf.keras.models.load_model('./model_9.h5')
+    model=tf.keras.models.load_model('./model_fine_tuned.h5')
     if img is not None:
         column1,column2,column3=st.columns([0.1,1,0.1])
         column1.write(" ")
